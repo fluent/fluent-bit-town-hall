@@ -1,0 +1,70 @@
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      rate: 2
+
+      processors:
+        logs:
+          # - name: opentelemetry_envelope
+
+          # - name: content_modifier
+          #   context: otel_resource_attributes
+          #   action: upsert
+          #   key: service.name
+          #   value: my-service
+
+          # - name: content_modifier
+          #   context: otel_resource_attributes
+          #   action: upsert
+          #   key: hostname
+          #   value: ${HOSTNAME}
+
+          # - name: content_modifier
+          #   context: otel_scope_name
+          #   action: upsert
+          #   value: 'fluent-bit'
+
+          # - name: content_modifier
+          #   context: otel_scope_version
+          #   action: upsert
+          #   value: 3.1
+
+         # Log content modification
+          - name: content_modifier
+            context: body
+            action: insert
+            key: "color"
+            value: "blue"
+
+          - name: content_modifier
+            context: body
+            action: delete
+            key: "message"
+
+  outputs:
+    - name : stdout
+      match: '*'
+
+    # - name: opentelemetry
+    #   match: '*'
+    #   host: 127.0.0.1
+    #   port: 4318
+    #   logs_body_key_attributes: true
+
+
+
+
+
+          # # OTel Schema modification
+          # - name: content_modifier
+          #   context: otel_resource_attributes
+          #   action: upsert
+          #   key: hostname
+          #   value: ${HOSTNAME}
+
+
+

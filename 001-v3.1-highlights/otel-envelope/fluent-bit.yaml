@@ -1,0 +1,21 @@
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      rate: 2
+
+      processors:
+        logs:
+          - name: opentelemetry_envelope
+
+  outputs:
+    - name : stdout
+      match: '*'
+
+    - name: opentelemetry
+      match: '*'
+      host: 127.0.0.1
+      port: 4318

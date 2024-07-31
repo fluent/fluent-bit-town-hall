@@ -1,0 +1,32 @@
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: dummy
+      dummy: '{"project": "Fluent Bit", "version": "v3.1"}'
+
+      processors:
+        logs:
+          - name: lua
+            call: cb_replace
+            code: |
+              function cb_replace(tag, timestamp, record)
+                record['tag'] = tag
+                record['new_key'] = 'new value'
+                record['project'] = 'Fluent Bit 3'
+
+                -- Record modified, so 'code' return value (first parameter) is 1
+                return 1, timestamp, record
+              end
+
+  outputs:
+    - name: stdout
+      match: '*'
+
+
+
+
+
+
