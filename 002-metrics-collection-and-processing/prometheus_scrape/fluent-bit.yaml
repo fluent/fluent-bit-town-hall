@@ -1,0 +1,25 @@
+service:
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: prometheus_scrape
+      host: 127.0.0.1
+      port: 8080
+      metrics_path: /metrics
+      scrape_interval: 1s
+
+      processors:
+        metrics:
+          - name: metrics_selector
+            action: include
+            metric_name: '/random_temperature_celsius/'
+
+  outputs:
+    - name: prometheus_exporter
+      match: '*'
+      host: 0.0.0.0
+      port: '2024'
+
+    - name: stdout
+      match: '*'

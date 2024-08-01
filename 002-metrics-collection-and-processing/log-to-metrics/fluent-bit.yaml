@@ -10,20 +10,18 @@ pipeline:
       processors:
         logs:
           - name: log_to_metrics
-            # tag: test_metric
             value_field: temperature
             metric_name: current_temperature
             metric_mode: gauge
             metric_description: Gets the current temperature
             tag: mytag
-            discard_logs: true
             add_label: location $location
 
   outputs:
     - name: prometheus_exporter
       match: '*'
       host: 0.0.0.0
-      port: '2021'
+      port: '2024'
 
     - name: stdout
       match: '*'

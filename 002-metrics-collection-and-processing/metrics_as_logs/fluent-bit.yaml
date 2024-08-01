@@ -11,3 +11,5 @@ pipeline:
   outputs:
     - name: stdout
       match: "*"
+      format: json_lines
+
