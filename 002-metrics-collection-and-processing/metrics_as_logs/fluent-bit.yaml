@@ -1,0 +1,13 @@
+service:
+  flush: 1
+  log_level: info
+
+pipeline:
+  inputs:
+    - name: cpu
+
+    - name: mem
+
+  outputs:
+    - name: stdout
+      match: "*"
